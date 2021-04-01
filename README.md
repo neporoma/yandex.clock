@@ -1,0 +1,2 @@
+# yandex.clock
+for Yandex
