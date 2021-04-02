@@ -1,0 +1,7 @@
+[
+  {
+    "id": "redeploy-webhook",
+    "execute-command": "/home/opc/scripts/helloworld.sh",
+    "command-working-directory": "/home/opc/site1/yandex.clock"
+  }
+]
