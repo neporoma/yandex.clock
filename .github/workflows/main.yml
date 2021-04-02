@@ -32,7 +32,7 @@ jobs:
       - name: Webhook Action
   # You may pin to the exact commit or the version.
   # uses: joelwmale/webhook-action@6f6298309b7aa21dc601d8c6271e0be055ce6f0e
-       uses: joelwmale/webhook-action@2.1.0
-       with:
+        uses: joelwmale/webhook-action@2.1.0
+          with:
     # The url to send the webhook event to
-          url: http://153.xxx.xxx.xxx:9000/hooks/redeploy-webhook
+            url: http://130.61.245.206:9000/hooks/redeploy-webhook
