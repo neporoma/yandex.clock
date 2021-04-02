@@ -8,10 +8,11 @@ RUN mkdir /home/app
 
 RUN python3 -m pip install --no-cache-dir geoip2 flask
 
-COPY ./1.py /home/app/ 
+COPY ./python/app.py /home/app/ 
+COPY ./html /home/app
 COPY ./GeoLite2-City.mmdb /home/app
 EXPOSE 8080
 
 WORKDIR "/home/app/"
-CMD ["python3", "/home/app/1.py"]
+CMD ["python3", "/home/app/app.py"]
 
