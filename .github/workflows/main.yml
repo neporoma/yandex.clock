@@ -35,4 +35,4 @@ jobs:
         uses: joelwmale/webhook-action@2.1.0
         with:
     # The url to send the webhook event to
-          url: http://130.61.245.206:9000/hooks/redeploy-webhook
+          url: http://neporoma.ru:9000/hooks/redeploy-webhook
