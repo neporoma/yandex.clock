@@ -47,7 +47,7 @@ services:
       - TZ=Europe/Moscow
       - GRAYLOG_PASSWORD_SECRET=eklruglkuelugleugleurglkeu3yjkdfvlkdj
       # Password:
-      - GRAYLOG_ROOT_PASSWORD_SHA2=1cd4b5507a0649d80a0b38797db1a9d0ffe3267082f219bc5cd7bf2f19884001
+      - GRAYLOG_ROOT_PASSWORD_SHA2=пароль
       - GRAYLOG_HTTP_EXTERNAL_URI=http://neporoma.ru:9999/
     entrypoint: /usr/bin/tini -- wait-for-it elasticsearch:9200 --  /docker-entrypoint.sh
     networks:
