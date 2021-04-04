@@ -45,7 +45,6 @@ services:
 #      - /home/andrey/geolite/GeoLite2-City.mmdb:/etc/graylog/server/GeoLite2-City.mmdb:ro
     environment:
       - TZ=Europe/Moscow
-      # CHANGE ME (must be at least 16 characters)!
       - GRAYLOG_PASSWORD_SECRET=eklruglkuelugleugleurglkeu3yjkdfvlkdj
       # Password:
       - GRAYLOG_ROOT_PASSWORD_SHA2=1cd4b5507a0649d80a0b38797db1a9d0ffe3267082f219bc5cd7bf2f19884001
