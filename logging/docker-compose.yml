@@ -1,0 +1,76 @@
+version: '3'
+services:
+  # MongoDB: https://hub.docker.com/_/mongo/
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    volumes:
+      - mongo-storage:/data/db
+    environment:
+      - TZ=Europe/Moscow
+    networks:
+      - logging
+    restart: always
+  # Elasticsearch: https://www.elastic.co/guide/en/elasticsearch/reference/7.10/docker.html
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2
+    container_name: elasticsearch
+    volumes:
+      - elasticsearch-storage:/usr/share/elasticsearch/data
+    environment:
+      - TZ=Europe/Moscow
+      - discovery.type=single-node
+      - http.host=0.0.0.0
+      - transport.host=localhost
+      - network.host=0.0.0.0
+      - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    deploy:
+      resources:
+        limits:
+          memory: 1g
+    networks:
+      - logging
+    restart: always
+  # Graylog: https://hub.docker.com/r/graylog/graylog/
+  graylog:
+    image: graylog/graylog:4.0
+    container_name: graylog
+    volumes:
+      - graylog-storage:/usr/share/graylog/data
+      - /home/ubuntu/site/yandex.clock/GeoLite2-City.mmdb:/usr/local/etc/graylog/GeoLite2-City.mmdb:ro
+#      - /home/andrey/geolite/GeoLite2-City.mmdb:/etc/graylog/server/GeoLite2-City.mmdb:ro
+    environment:
+      - TZ=Europe/Moscow
+      # CHANGE ME (must be at least 16 characters)!
+      - GRAYLOG_PASSWORD_SECRET=eklruglkuelugleugleurglkeu3yjkdfvlkdj
+      # Password:
+      - GRAYLOG_ROOT_PASSWORD_SHA2=1cd4b5507a0649d80a0b38797db1a9d0ffe3267082f219bc5cd7bf2f19884001
+      - GRAYLOG_HTTP_EXTERNAL_URI=http://neporoma.ru:9000/
+    entrypoint: /usr/bin/tini -- wait-for-it elasticsearch:9200 --  /docker-entrypoint.sh
+    networks:
+      - logging
+    restart: always
+    depends_on:
+      - mongo
+      - elasticsearch
+    ports:
+      # Graylog web interface and REST API
+      - 9000:9000
+      # Syslog UDP
+      - 1514:1514/udp
+      # GELF UDP
+      - 12401:12401/udp
+networks:
+  logging:
+    driver: bridge
+volumes:
+  mongo-storage:
+    driver: local
+  elasticsearch-storage:
+    driver: local
+  graylog-storage:
+    driver: local
